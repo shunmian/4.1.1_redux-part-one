@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import {v4} from 'node-uuid'
+
 import {setVisibilityFilter, addTodo, toggleTodo} from './actions'
 
 let nextTodoId = 0;
