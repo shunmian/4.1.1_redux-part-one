@@ -1,4 +1,4 @@
-import {createStore, combineReducers} from 'redux'
+import {combineReducers} from 'redux'
 
 const todo = (state, action) => {
     switch (action.type) {
@@ -49,7 +49,6 @@ const todo = (state, action) => {
         return state;
     }
   };
-  
 
   const todoApp = combineReducers({
     todos,

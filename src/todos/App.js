@@ -1,35 +1,11 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
-import {connect} from 'react-redux'
-
-//action creator
-const setVisibilityFilter=(filter)=>{
-  return {
-    type: "SET_VISIBILITY_FILTER",
-    filter: filter
-  }
-}
-
-const addTodo=(text)=>{
-  return {
-    type: "ADD_TODO",
-    text: text,
-    id: nextTodoId++
-  }
-}
-
-const toggleTodo = (id)=>{
-  return {
-      type: 'TOGGLE_TODO',
-      id
-    }
-}
-
+import { connect } from 'react-redux'
+import {v4} from 'node-uuid'
+import {setVisibilityFilter, addTodo, toggleTodo} from './actions'
 
 let nextTodoId = 0;
 
-let AddTodo = ({dispatch}) => {
+let AddTodo = ({ dispatch }) => {
   let input
   return (
     <div>
@@ -43,11 +19,11 @@ let AddTodo = ({dispatch}) => {
 }
 
 AddTodo = connect(
-  state=>{
+  state => {
     return {};
   },
-  dispatch=>{
-    return {dispatch};
+  dispatch => {
+    return { dispatch };
   })(AddTodo)
 
 
@@ -113,19 +89,16 @@ const Link = ({
     </a>)
 }
 
-const mapStateToLinkProps = (state,ownProps)=>{
-  return {
-    active: ownProps.filter === state.visibilityFilter
-  }
-}
+const mapStateToLinkProps = (state, ownProps) => ({
+  active: ownProps.filter === state.visibilityFilter
+})
 
-const mapDispatchToLinkProps = (dispatch,ownProps)=>{
-  return{
-    onClick: ()=>{dispatch(
+const mapDispatchToLinkProps = (dispatch, ownProps) => ({
+  onClick: () => {
+    dispatch(
       setVisibilityFilter(ownProps.filter))
-    }
   }
-}
+})
 
 
 
@@ -147,17 +120,17 @@ const getVisibleTodos = (todos, filter) => {
   }
 }
 
-const mapStateToProps = (state)=>{
-  return{
-    todos:getVisibleTodos(
+const mapStateToProps = (state) => {
+  return {
+    todos: getVisibleTodos(
       state.todos,
       state.visibilityFilter)
   }
 }
 
-const mapDispatchToProps = (dispatch)=>{
+const mapDispatchToProps = (dispatch) => {
   return {
-    onTodoClick:(id)=>{
+    onTodoClick: (id) => {
       dispatch(toggleTodo(id))
     }
   }
