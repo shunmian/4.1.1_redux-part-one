@@ -1,6 +1,9 @@
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
 import todoApp from './reducers'
+import promise from 'redux-promise'
+import createLogger from 'redux-logger'
 
+/*
 const loggerSupport = (store) => (next) => {
   if (!console.group) {
     return next;
@@ -30,15 +33,17 @@ const wrapDispatchWithMiddlewares = (store, middlewares) => {
     store.dispatch = middleware(store)(store.dispatch)
   })
 }
+*/
 
 const configureStore = () => {
-  const store = createStore(todoApp)
-  const middlewares = [promiseSupport]
+  const middlewares = [promise]
   if (process.env.NODE_ENV !== 'production') {
-    middlewares.push(loggerSupport);
+    middlewares.push(createLogger);
   }
-  wrapDispatchWithMiddlewares(store, middlewares)
-  return store
+  return createStore(
+    todoApp,
+    applyMiddleware(...middlewares)
+  )
 }
 
 export default configureStore
