@@ -1,56 +1,69 @@
-import todo from './todo'
 import { combineReducers } from 'redux'
 
 const byId = (state={},action) => {
   switch (action.type){
-    case 'ADD_TODO':
-    case 'TOGGLE_TODO':
-      return {
-        ...state,
-        [action.id]: todo(state[action.id],action)
-      }  
+    case 'RECEIVE_TODOS':
+      const nextTodos = {...state}
+      action.response.forEach(todo => {
+        nextTodos[todo.id] = todo
+      })
+      return nextTodos
     default:
       return state;
   }
 }
 
-const allIds = (state=[],action) => {
-  switch (action.type){
-    case 'ADD_TODO':
-      return [
-        ...state,
-        action.id
-      ]
+
+const allIds = (state=[],action) =>{
+  if(action.filter !== 'all'){
+    return state
+  }
+  switch (action.type) {
+    case 'RECEIVE_TODOS':
+      return action.response.map(todo=>todo.id)
     default:
       return state;
   }
 }
+
+const activeIds = (state=[],action) =>{
+  if(action.filter !== 'active'){
+    return state
+  }
+  switch (action.type) {
+    case 'RECEIVE_TODOS':
+      return action.response.map(todo=>todo.id)
+    default:
+      return state;
+  }
+}
+
+const completedIds = (state=[],action) =>{
+  if(action.filter !== 'completed'){
+    return state
+  }
+  switch (action.type) {
+    case 'RECEIVE_TODOS':
+      return action.response.map(todo=>todo.id)
+    default:
+      return state;
+  }
+}
+
+const IdsByFilter = combineReducers({
+  all: allIds,
+  active: activeIds,
+  completed: completedIds,
+})
 
 const todos = combineReducers({
   byId,
-  allIds
+  IdsByFilter
 })
 
-const getAllTodos = (state) => state.allIds.map(id => state.byId[id])
-
 const getVisibleTodos = (state, filter) => {
-  const allTodos = getAllTodos (state)
-  let results;
-  switch (filter) {
-    case "all":
-      results = allTodos;
-      break;
-    case "active":
-      results = allTodos.filter(t => t.completed === false)
-      break;
-    case "completed":
-      results = allTodos.filter(t => t.completed === true)
-      break;
-    default:
-      throw new Error(`Unknown filter: ${filter}.`);
-  }
-  return results
+  return state.IdsByFilter[filter].map(id=>state.byId[id])
 }
 
 export default todos
-export {getVisibleTodos}
+export { getVisibleTodos }
