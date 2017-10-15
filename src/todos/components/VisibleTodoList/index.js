@@ -13,23 +13,28 @@ const TodoList = ({
   </ul>
 
 const getVisibleTodos = (todos, filter) => {
+  let results;
   switch (filter) {
-    case "SHOW_ALL":
-      return todos
-    case "SHOW_ACTIVE":
-      return todos.filter(t => t.completed === false)
-    case "SHOW_COMPLETED":
-      return todos.filter(t => t.completed === true)
+    case "all":
+      results = todos;
+      break;
+    case "active":
+      results = todos.filter(t => t.completed === false)
+      break;
+    case "completed":
+      results = todos.filter(t => t.completed === true)
+      break;
     default:
-      return todos
+      throw new Error(`Unknown filter: ${filter}.`);
   }
+  return results
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state,ownProps) => {
   return {
     todos: getVisibleTodos(
       state.todos,
-      state.visibilityFilter)
+      ownProps.filter)
   }
 }
 

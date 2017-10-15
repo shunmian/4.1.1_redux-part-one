@@ -1,41 +1,21 @@
-import React from 'react';
-import { connect } from 'react-redux'
-import * as actions from './actions'
+import React, {PropTypes} from 'react';
+import { Link } from 'react-router';
 
-const Link = ({
-  active,
-  children,
-  onClick,
-  }) => {
-  if (active) {
-    return <span>{children}</span>
-  }
-  return (
-    <a href='#'
-      onClick={e => {
-        e.preventDefault();
-        onClick()
-      }} >
-      {children}
-    </a>)
+const FilterLink = ({filter,children}) => (
+  <Link
+    to ={filter === 'all' ? '':filter}
+    activeStyle={{
+      textDecoration: 'none',
+      color: 'black',
+    }}
+  >
+    {children}
+  </Link>
+)
+
+FilterLink.propTypes = {
+  filter: PropTypes.oneOf(['all', 'completed', 'active']).isRequired,
+  children: PropTypes.node.isRequired,
 }
-
-const mapStateToLinkProps = (state, ownProps) => ({
-  active: ownProps.filter === state.visibilityFilter
-})
-
-const mapDispatchToLinkProps = (dispatch, ownProps) => ({
-  onClick: () => {
-    dispatch(
-      actions.setVisibilityFilter(ownProps.filter))
-  }
-})
-
-
-
-const FilterLink = connect(
-  mapStateToLinkProps,
-  mapDispatchToLinkProps
-)(Link)
 
 export default FilterLink

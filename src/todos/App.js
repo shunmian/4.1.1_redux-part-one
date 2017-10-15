@@ -4,14 +4,12 @@ import Footer from './components/Footer'
 import VisibleTodoList from './components/VisibleTodoList'
 import AddTodo from './components/AddTodo'
 
-const TodoApp = ({
-          todos,
-  visibilityFilter
-}) => {
+const TodoApp = ({params}) => {
   return (
     <div className="App">
       <AddTodo />
-      <VisibleTodoList />
+      <VisibleTodoList
+        filter={params.filter ||'all'}/>
       <Footer />
     </div>
   )
