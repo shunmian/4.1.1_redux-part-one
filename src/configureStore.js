@@ -22,12 +22,6 @@ const configureStore = () =>{
   if(process.env.NODE_ENV !== 'production') {
     store.dispatch = addingLogToDispatch(store);
   }
-
-
-
-  // store.subscribe(throttle(()=>{
-  //   saveState({todos:store.getState().todos})
-  // }),1000)
   return store
 }
 

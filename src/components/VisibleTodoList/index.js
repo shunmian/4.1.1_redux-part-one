@@ -18,17 +18,18 @@ const TodoList = ({
 class VisibleTodoList extends Component {
 
   componentDidMount() {
-    fetchTodos(this.props.filter).then((todos) => {
-      console.log(`filter: ${this.props.filter}, todos from fakeDatabase:`,todos)
-    })
+    this.fetchData()
   }
 
   componentDidUpdate(prevProps){
     if(this.props.filter !== prevProps.filter){
-      fetchTodos(this.props.filter).then((todos) => {
-        console.log(`filter: ${this.props.filter}, todos from fakeDatabase:`,todos)
-      })
+      this.fetchData()
     }
+  }
+
+  fetchData(){
+    const {filter,receiveTodos} = this.props
+    fetchTodos(filter).then(todos=>receiveTodos(filter, todos))
   }
 
   render() {
@@ -46,11 +47,17 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onTodoClick:  (id) => {dispatch(actions.toggleTodo(id))},
+    receiveTodos: (filter, response) => {dispatch(actions.receiveTodos(filter,response))},
+  }
+}
 
 
 VisibleTodoList = withRouter(connect(
   mapStateToProps,
-  { onTodoClick: actions.toggleTodo }
+  mapDispatchToProps
 )(VisibleTodoList))
 
 export default VisibleTodoList
