@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux'
 import Todo from './Todo'
 import * as actions from './actions' 
+import {withRouter} from 'react-router'
 
 const TodoList = ({
   onTodoClick, todos
@@ -30,11 +31,11 @@ const getVisibleTodos = (todos, filter) => {
   return results
 }
 
-const mapStateToProps = (state,ownProps) => {
+const mapStateToProps = (state, ownProps) => {
   return {
     todos: getVisibleTodos(
       state.todos,
-      ownProps.filter)
+      ownProps.params.filter || 'all')
   }
 }
 
@@ -46,9 +47,9 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-const VisibleTodoList = connect(
+const VisibleTodoList = withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(TodoList)
+)(TodoList))
 
 export default VisibleTodoList

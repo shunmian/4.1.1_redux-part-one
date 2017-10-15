@@ -8,8 +8,7 @@ const TodoApp = ({params}) => {
   return (
     <div className="App">
       <AddTodo />
-      <VisibleTodoList
-        filter={params.filter ||'all'}/>
+      <VisibleTodoList/>
       <Footer />
     </div>
   )
