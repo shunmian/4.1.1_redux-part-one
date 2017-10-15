@@ -1,7 +1,7 @@
 import { createStore } from 'redux'
 import todoApp from './reducers'
 
-const addingLogToDispatch = (store) => {
+const addLogSupportToDispatch = (store) => {
   const rawDispatch = store.dispatch;
   if(!console.group){
     return rawDispatch;
@@ -17,11 +17,23 @@ const addingLogToDispatch = (store) => {
   }
 }
 
+const addPromiseSupportToDispatch = (store) => {
+  const rawDispatch = store.dispatch;
+  return (action) => {
+    if(typeof action.then === 'function'){
+      return action.then(rawDispatch)
+    }else{
+      return rawDispatch(action)
+    }
+  }
+}
+
 const configureStore = () =>{
   const store =createStore(todoApp)
   if(process.env.NODE_ENV !== 'production') {
-    store.dispatch = addingLogToDispatch(store);
+    store.dispatch = addLogSupportToDispatch(store);
   }
+  store.dispatch = addPromiseSupportToDispatch(store)
   return store
 }
 

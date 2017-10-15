@@ -1,3 +1,11 @@
+import * as api from '../../api'
+
+const fetchTodos = (filter) => {
+  return api.fetchTodos(filter).then(response=>
+    receiveTodos(filter,response)
+  )
+}
+
 const receiveTodos = (filter, response) => {
   return {
     type: 'RECEIVE_TODOS',
@@ -11,4 +19,4 @@ const toggleTodo = (id) => ({
   id
 })
 
-export { toggleTodo, receiveTodos }
+export { toggleTodo, fetchTodos}

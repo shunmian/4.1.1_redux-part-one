@@ -4,7 +4,6 @@ import Todo from './Todo'
 import * as actions from './actions'
 import { withRouter } from 'react-router'
 import { getVisibleTodos } from '../../reducers'
-import { fetchTodos } from '../../api'
 
 const TodoList = ({
   onTodoClick, todos
@@ -28,8 +27,8 @@ class VisibleTodoList extends Component {
   }
 
   fetchData(){
-    const {filter,receiveTodos} = this.props
-    fetchTodos(filter).then(todos=>receiveTodos(filter, todos))
+    const {filter,fetchTodos} = this.props
+    fetchTodos(filter)
   }
 
   render() {
@@ -43,14 +42,14 @@ const mapStateToProps = (state, ownProps) => {
     filter,
     todos: getVisibleTodos(
       state.todos,
-      ownProps.params.filter || 'all')
+      filter)
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     onTodoClick:  (id) => {dispatch(actions.toggleTodo(id))},
-    receiveTodos: (filter, response) => {dispatch(actions.receiveTodos(filter,response))},
+    fetchTodos: (filter) => {dispatch(actions.fetchTodos(filter))},
   }
 }
 
