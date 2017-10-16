@@ -5,9 +5,10 @@ const requestTodos = (filter) => ({
   filter
 })
 
-const fetchTodos = (filter) => {
+const fetchTodos = (filter) => (dispatch) => {
+  dispatch(requestTodos(filter))
   return api.fetchTodos(filter).then(response=>
-    receiveTodos(filter,response)
+    dispatch(receiveTodos(filter,response))
   )
 }
 
@@ -24,4 +25,4 @@ const toggleTodo = (id) => ({
   id
 })
 
-export { toggleTodo, fetchTodos, requestTodos}
+export { toggleTodo, fetchTodos}

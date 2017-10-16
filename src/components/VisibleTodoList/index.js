@@ -27,8 +27,7 @@ class VisibleTodoList extends Component {
   }
 
   fetchData(){
-    const {filter,fetchTodos, requestTodos} = this.props
-    requestTodos(filter)
+    const {filter,fetchTodos} = this.props
     fetchTodos(filter)
   }
 
@@ -56,7 +55,6 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onTodoClick:  (id) => {dispatch(actions.toggleTodo(id))},
     fetchTodos: (filter) => {dispatch(actions.fetchTodos(filter))},
-    requestTodos: (filter) => {dispatch(actions.requestTodos(filter))}
   }
 }
 
