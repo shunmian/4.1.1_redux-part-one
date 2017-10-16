@@ -14,10 +14,13 @@ const todos = combineReducers({
 })
 
 const getVisibleTodos = (state, filter) => {
-  debugger
   const ids = fromList.getIds(state.listByFilter[filter])
   return ids.map(id=>fromById.getTodo(state.byId,id))
 }
 
+const getIsFetching = (state,filter) => {
+  return fromList.getIsFetching(state.listByFilter[filter]);
+}
+
 export default todos
-export { getVisibleTodos }
+export { getVisibleTodos, getIsFetching }

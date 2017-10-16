@@ -1,5 +1,10 @@
 import * as api from '../../api'
 
+const requestTodos = (filter) => ({
+  type: 'REQUEST_TODOS',
+  filter
+})
+
 const fetchTodos = (filter) => {
   return api.fetchTodos(filter).then(response=>
     receiveTodos(filter,response)
@@ -19,4 +24,4 @@ const toggleTodo = (id) => ({
   id
 })
 
-export { toggleTodo, fetchTodos}
+export { toggleTodo, fetchTodos, requestTodos}

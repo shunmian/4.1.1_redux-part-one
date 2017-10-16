@@ -2,7 +2,6 @@ const byId = (state = {}, action) => {
   switch (action.type) {
     case 'RECEIVE_TODOS':
       const nextTodos = { ...state }
-      debugger
       action.response.forEach(todo => {
         nextTodos[todo.id] = todo
       })
