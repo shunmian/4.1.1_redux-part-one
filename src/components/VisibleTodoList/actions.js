@@ -1,11 +1,15 @@
 import * as api from '../../api'
+import { getIsFetching } from '../../reducers'
 
 const requestTodos = (filter) => ({
   type: 'REQUEST_TODOS',
   filter
 })
 
-const fetchTodos = (filter) => (dispatch) => {
+const fetchTodos = (filter) => (dispatch, getState) => {
+  if(getIsFetching(getState(),filter)){
+    return Promise.resolve();
+  }
   dispatch(requestTodos(filter))
   return api.fetchTodos(filter).then(response=>
     dispatch(receiveTodos(filter,response))
