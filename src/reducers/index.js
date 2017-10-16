@@ -22,5 +22,9 @@ const getIsFetching = (state,filter) => {
   return fromList.getIsFetching(state.listByFilter[filter]);
 }
 
+const getErrorMessage = (state,filter) => {
+  return fromList.getErrorMessage(state.listByFilter[filter]);
+}
+
 export default todos
-export { getVisibleTodos, getIsFetching }
+export { getVisibleTodos, getIsFetching, getErrorMessage}
