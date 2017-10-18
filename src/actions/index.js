@@ -1,7 +1,13 @@
-import * as api from '../../api'
-import { getIsFetching } from '../../reducers'
+import * as api from '../api'
+import { getIsFetching } from '../reducers'
 
 
+const addTodo = (text) => (dispatch) => {
+  api.addTodo(text).then(response=>dispatch({
+    type: 'ADD_TODO_SUCCESS',
+    response
+  }))
+}
 
 const fetchTodos = (filter) => (dispatch, getState) => {
   if(getIsFetching(getState(),filter)){
@@ -29,4 +35,4 @@ const toggleTodo = (id) => ({
   id
 })
 
-export { toggleTodo, fetchTodos}
+export { toggleTodo, fetchTodos, addTodo}

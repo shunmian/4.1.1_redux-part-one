@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import Todo from './Todo'
-import * as actions from './actions'
+import * as actions from '../../actions'
 import { withRouter } from 'react-router'
 import { getVisibleTodos, getIsFetching, getErrorMessage } from '../../reducers'
 import ErrorMessage from './ErrorMessage'
