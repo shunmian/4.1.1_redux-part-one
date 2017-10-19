@@ -25,7 +25,7 @@ const fetchTodos = (filter) => (dispatch, getState) => {
     dispatch({
       type: 'FETCH_TODOS_SUCCESS',
       filter,
-      response:normalize(response, schema.arrayOfTodos)
+      response: normalize(response, schema.arrayOfTodos)
     })
   }, error => dispatch({
     type: 'FETCH_TODOS_ERROR',
@@ -35,9 +35,11 @@ const fetchTodos = (filter) => (dispatch, getState) => {
   )
 }
 
-const toggleTodo = (id) => ({
-  type: 'TOGGLE_TODO',
-  id
-})
+const toggleTodo = (id) => (dispatch) => (
+  api.toggleTodo(id).then(response => dispatch({
+    type: 'TOGGLE_TODO_SUCCESS',
+    response: normalize(response, schema.todo)
+  }))
+)
 
 export { toggleTodo, fetchTodos, addTodo }

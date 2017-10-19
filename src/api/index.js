@@ -1,4 +1,4 @@
-import {v4} from 'node-uuid'
+import { v4 } from 'node-uuid'
 
 const fakeDatabase = {
   todos: [{
@@ -17,22 +17,22 @@ const fakeDatabase = {
 };
 
 const delay = (ms) => new Promise(resolve =>
-  setTimeout(resolve,ms)
+  setTimeout(resolve, ms)
 )
 
 
 export const fetchTodos = (filter) => {
-  return delay(500).then(()=>{
-    if(Math.random()>0.5){
+  return delay(500).then(() => {
+    if (Math.random() > 0.5) {
       throw new Error('Boom!');
     }
     switch (filter) {
       case 'all':
         return fakeDatabase.todos;
       case 'active':
-        return fakeDatabase.todos.filter(todo=>!todo.completed)
+        return fakeDatabase.todos.filter(todo => !todo.completed)
       case 'completed':
-        return fakeDatabase.todos.filter(todo=>todo.completed)
+        return fakeDatabase.todos.filter(todo => todo.completed)
       default:
         throw new Error(`Unknown filter:${filter}`)
     }
@@ -40,9 +40,9 @@ export const fetchTodos = (filter) => {
 }
 
 export const addTodo = (text) => {
-  return delay(500).then(()=>{
+  return delay(500).then(() => {
     const todo = {
-      id:v4(),
+      id: v4(),
       text,
       completed: false,
     }
@@ -50,3 +50,10 @@ export const addTodo = (text) => {
     return todo;
   })
 }
+
+export const toggleTodo = (id) =>
+  delay(500).then(() => {
+    const todo = fakeDatabase.todos.find(t => t.id === id);
+    todo.completed = !todo.completed;
+    return todo;
+  });
