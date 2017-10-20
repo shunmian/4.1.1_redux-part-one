@@ -1,13 +1,13 @@
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
 # dependencies
-/node_modules
+/Redux Part I_Basics & Advance for TodoList App/advance/node_modules
 
 # testing
 /coverage
 
 # production
-/build
+/Redux Part I_Basics & Advance for TodoList App/advance/build
 
 # misc
 .DS_Store
